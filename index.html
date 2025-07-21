@@ -1,88 +1,126 @@
 <!DOCTYPE html>
 <html lang="ar">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="صفحة لتحميل كرومات القرآن الكريم بدون خلفية مجانًا.">
-  <meta name="keywords" content="كرومات, القرآن, بدون خلفية, تحميل, فيديوهات إسلامية">
-  <meta name="author" content="Nesmat AlQuran">
-  <title>كرومات القرآن الكريم بدون خلفية</title>
+  <title>كرومات القرآن</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
-      direction: rtl;
-      font-family: 'Arial', sans-serif;
-      background: #f9f9f9;
+      font-family: 'Cairo', sans-serif;
       margin: 0;
-      padding: 0;
+      background: #f9f9f9;
+      color: #222;
+      direction: rtl;
     }
+
     header {
-      background-color: #007b5e;
+      background: #007B8A;
+      padding: 1rem;
       color: white;
-      padding: 20px;
       text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
     }
+
     .container {
-      padding: 30px;
-      max-width: 1000px;
-      margin: auto;
-    }
-    .chromas {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
     }
-    .chroma {
+
+    .card {
       background: white;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      text-align: center;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: 0.3s ease;
     }
-    .chroma img {
-      max-width: 100%;
-      border-radius: 5px;
+
+    .card:hover {
+      transform: translateY(-5px);
     }
-    .chroma a {
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 1rem;
+    }
+
+    .card-content h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      color: #007B8A;
+    }
+
+    .card-content a {
       display: inline-block;
-      margin-top: 10px;
-      padding: 8px 16px;
-      background-color: #007b5e;
+      margin-top: 0.5rem;
+      padding: 0.4rem 0.8rem;
+      background: #007B8A;
       color: white;
+      border-radius: 6px;
       text-decoration: none;
-      border-radius: 5px;
+      font-size: 0.9rem;
     }
+
+    .card-content a:hover {
+      background: #005f6b;
+    }
+
     footer {
-      margin-top: 40px;
       text-align: center;
-      color: gray;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #555;
     }
   </style>
 </head>
+
 <body>
-  <header>
-    <h1>كرومات القرآن الكريم بدون خلفية</h1>
-    <p>حمل أفضل الكرومات الإسلامية مجانًا لاستخدامها في فيديوهاتك</p>
-  </header>
+  <header>كرومات القرآن الكريم</header>
 
   <div class="container">
-    <div class="chromas">
-      <div class="chroma">
-        <img src="https://via.placeholder.com/300x150?text=كرومة+1" alt="كرومة 1">
-        <a href="https://t.me/quranbng/1" target="_blank">تحميل</a>
-      </div>
-      <div class="chroma">
-        <img src="https://via.placeholder.com/300x150?text=كرومة+2" alt="كرومة 2">
-        <a href="https://t.me/quranbng/2" target="_blank">تحميل</a>
-      </div>
-      <div class="chroma">
-        <img src="https://via.placeholder.com/300x150?text=كرومة+3" alt="كرومة 3">
-        <a href="https://t.me/quranbng/3" target="_blank">تحميل</a>
+    <div class="card">
+      <img src="https://i.imgur.com/k1wX4aS.jpg" alt="كرومة سورة الإخلاص">
+      <div class="card-content">
+        <h3>كرومة سورة الإخلاص</h3>
+        <a href="https://t.me/quranbng/10" target="_blank">تحميل</a>
       </div>
     </div>
+
+    <div class="card">
+      <img src="https://i.imgur.com/WKJbXyU.jpg" alt="كرومة بداية الفيديو">
+      <div class="card-content">
+        <h3>كرومة مقدمة رائعة</h3>
+        <a href="https://t.me/quranbng/15" target="_blank">تحميل</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://i.imgur.com/GGEeR2u.jpg" alt="كرومة خاتمة الفيديو">
+      <div class="card-content">
+        <h3>كرومة ختامية مميزة</h3>
+        <a href="https://t.me/quranbng/20" target="_blank">تحميل</a>
+      </div>
+    </div>
+
+    <!-- أضف المزيد من الكرومات هنا -->
+
   </div>
 
   <footer>
-    <p>جميع الحقوق محفوظة &copy; نسمات القرآن 2025</p>
+    © 2025 نُسِمات القُرآن - جميع الحقوق محفوظة
   </footer>
 </body>
+
 </html>
