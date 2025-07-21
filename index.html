@@ -1,109 +1,83 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>كرومات القرآن | Quran Chroma</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>كرومات القرآن</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f7f9fc;
+      font-family: 'Cairo', sans-serif;
+      background: #f0f0f3;
       color: #222;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background-color: #2d89ef;
-      color: white;
-      padding: 20px;
       text-align: center;
+      padding: 30px;
     }
     h1 {
-      margin: 0;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
     }
     .container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      margin-top: 40px;
+    }
+    .chroma-box {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       padding: 20px;
+      transition: transform 0.2s;
     }
-    .card {
-      background: white;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
+    .chroma-box:hover {
+      transform: translateY(-5px);
     }
-    .card h2 {
-      font-size: 18px;
-      margin: 10px 0;
+    .chroma-title {
+      font-weight: bold;
+      margin-bottom: 10px;
     }
-    .btn {
-      display: inline-block;
-      margin: 5px;
-      padding: 10px 15px;
-      border-radius: 5px;
-      text-decoration: none;
+    .download-btn {
+      background-color: #4CAF50;
       color: white;
-      background-color: #2d89ef;
-      transition: background-color 0.3s ease;
+      padding: 10px 18px;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background 0.3s;
     }
-    .btn:hover {
-      background-color: #1b5fad;
-    }
-    footer {
-      text-align: center;
-      padding: 15px;
-      background: #e2e2e2;
-      margin-top: 20px;
+    .download-btn:hover {
+      background-color: #388E3C;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>📽️ كرومات القرآن | Quran Chroma</h1>
-    <p>حمّل أجمل كرومات فيديوهات القرآن مجانًا</p>
-  </header>
+  <h1>🌿 كرومات القرآن المجانية</h1>
+  <p>استخدم هذه الكرومات لتزيين فيديوهاتك القرآنية وتسهيل العمل الدعوي</p>
 
   <div class="container">
-    <div class="card">
-      <h2>كروما 1</h2>
-      <a class="btn" href="https://drive.google.com/file/d/12FzKkd9twMwEWE5y_F0Z8ZGEASAKafE-/view" target="_blank">معاينة</a>
-      <a class="btn" href="https://drive.google.com/uc?export=download&id=12FzKkd9twMwEWE5y_F0Z8ZGEASAKafE-">تحميل</a>
+    <div class="chroma-box">
+      <div class="chroma-title">كروما 1</div>
+      <a class="download-btn" href="https://drive.usercontent.google.com/u/0/uc?id=1anRvCrT8FITjOF0ejtWKaDHZOsCDmmIq&export=download" target="_blank">تحميل مباشر</a>
     </div>
-
-    <div class="card">
-      <h2>كروما 2</h2>
-      <a class="btn" href="https://drive.google.com/file/d/1oc9kqNf9XGG2PZE8V0jeBcydFVlryZNS/view" target="_blank">معاينة</a>
-      <a class="btn" href="https://drive.google.com/uc?export=download&id=1oc9kqNf9XGG2PZE8V0jeBcydFVlryZNS">تحميل</a>
+    <div class="chroma-box">
+      <div class="chroma-title">كروما 2</div>
+      <a class="download-btn" href="https://drive.usercontent.google.com/u/0/uc?id=1Dw7tPCaGer58yVZnYB4AxqAT9CpahVit&export=download" target="_blank">تحميل مباشر</a>
     </div>
-
-    <div class="card">
-      <h2>كروما 3</h2>
-      <a class="btn" href="https://drive.google.com/file/d/1rf-jA5fs7AuRxkFTcktjb_VErn7QaJ5r/view" target="_blank">معاينة</a>
-      <a class="btn" href="https://drive.google.com/uc?export=download&id=1rf-jA5fs7AuRxkFTcktjb_VErn7QaJ5r">تحميل</a>
+    <div class="chroma-box">
+      <div class="chroma-title">كروما 3</div>
+      <a class="download-btn" href="https://drive.usercontent.google.com/u/0/uc?id=1rf-jA5fs7AuRxkFTcktjb_VErn7QaJ5r&export=download" target="_blank">تحميل مباشر</a>
     </div>
-
-    <div class="card">
-      <h2>كروما 4</h2>
-      <a class="btn" href="https://drive.google.com/file/d/1Dw7tPCaGer58yVZnYB4AxqAT9CpahVit/view" target="_blank">معاينة</a>
-      <a class="btn" href="https://drive.google.com/uc?export=download&id=1Dw7tPCaGer58yVZnYB4AxqAT9CpahVit">تحميل</a>
+    <div class="chroma-box">
+      <div class="chroma-title">كروما 4</div>
+      <a class="download-btn" href="https://drive.usercontent.google.com/u/0/uc?id=1oc9kqNf9XGG2PZE8V0jeBcydFVlryZNS&export=download" target="_blank">تحميل مباشر</a>
     </div>
-
-    <div class="card">
-      <h2>كروما 5</h2>
-      <a class="btn" href="https://drive.google.com/file/d/1anRvCrT8FITjOF0ejtWKaDHZOsCDmmIq/view" target="_blank">معاينة</a>
-      <a class="btn" href="https://drive.google.com/uc?export=download&id=1anRvCrT8FITjOF0ejtWKaDHZOsCDmmIq">تحميل</a>
+    <div class="chroma-box">
+      <div class="chroma-title">كروما 5</div>
+      <a class="download-btn" href="https://drive.usercontent.google.com/u/0/uc?id=12FzKkd9twMwEWE5y_F0Z8ZGEASAKafE-&export=download" target="_blank">تحميل مباشر</a>
     </div>
   </div>
-
-  <footer>
-    جميع الحقوق محفوظة © قناة نسمات القرآن
-  </footer>
 
 </body>
 </html>
