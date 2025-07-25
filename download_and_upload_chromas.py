@@ -1,114 +1,104 @@
 import os
 import json
 import requests
-from datetime import datetime
-import subprocess
+import datetime
+from google.oauth2.credentials import Credentials
+from googleapiclient.discovery import build
+from googleapiclient.http import MediaFileUpload
+import yt_dlp
 
-# إعدادات Google Drive API
-CLIENT_ID = os.getenv("DRIVE_CLIENT_ID")
-CLIENT_SECRET = os.getenv("DRIVE_CLIENT_SECRET")
-REFRESH_TOKEN = os.getenv("DRIVE_REFRESH_TOKEN")
+# إعداد المتغيرات البيئية
+FOLDER_ID = 'YOUR_CHROMAS_FOLDER_ID'  # ضع ID مجلد الكرومات في Google Drive
+LOG_FILE = 'log.txt'
 
-# مجلد Google Drive الهدف
-FOLDER_ID = "1-qmqWnTIxI7obvRuHpVoBZCu7of8fWIi"
+CLIENT_ID = os.environ.get('DRIVE_CLIENT_ID')
+CLIENT_SECRET = os.environ.get('DRIVE_CLIENT_SECRET')
+REFRESH_TOKEN = os.environ.get('DRIVE_REFRESH_TOKEN')
 
-# اسم سجل الفيديوهات
-LOG_FILE = "log.txt"
+TOKEN_URI = "https://oauth2.googleapis.com/token"
 
-# كلمات البحث في يوتيوب
-QUERY = "تلاوة قرآنية خلفية سوداء"
-MAX_RESULTS = 10
-DOWNLOAD_COUNT = 3
-
-# تحميل توكن الوصول باستخدام التوكن المنعش
 def get_access_token():
-    url = "https://oauth2.googleapis.com/token"
     payload = {
-        'client_id': CLIENT_ID,
-        'client_secret': CLIENT_SECRET,
-        'refresh_token': REFRESH_TOKEN,
-        'grant_type': 'refresh_token'
+        "client_id": CLIENT_ID,
+        "client_secret": CLIENT_SECRET,
+        "refresh_token": REFRESH_TOKEN,
+        "grant_type": "refresh_token"
     }
-    r = requests.post(url, data=payload)
-    return r.json().get("access_token")
+    res = requests.post(TOKEN_URI, data=payload)
+    return res.json().get("access_token")
 
-# تحميل سجل الفيديوهات السابقة
-def load_log():
-    if os.path.exists(LOG_FILE):
-        with open(LOG_FILE, "r", encoding="utf-8") as f:
-            return set(line.strip() for line in f.readlines())
-    return set()
-
-# حفظ الفيديوهات الجديدة في السجل
-def save_to_log(video_ids):
-    with open(LOG_FILE, "a", encoding="utf-8") as f:
-        for vid in video_ids:
-            f.write(f"{vid}\n")
-
-# البحث عن فيديوهات YouTube عبر API
-def search_youtube():
-    api_key = os.getenv("YOUTUBE_API_KEY")
-    url = f"https://www.googleapis.com/youtube/v3/search"
-    params = {
-        "part": "snippet",
-        "q": QUERY,
-        "type": "video",
-        "maxResults": MAX_RESULTS,
-        "key": api_key
-    }
-    r = requests.get(url, params=params)
-    results = r.json()
-    videos = []
-    for item in results.get("items", []):
-        video_id = item["id"]["videoId"]
-        title = item["snippet"]["title"]
-        videos.append((video_id, title))
-    return videos
-
-# تحميل فيديو عبر yt-dlp
-def download_video(video_id):
-    url = f"https://youtu.be/{video_id}"
-    subprocess.run(["yt-dlp", "-f", "best", "-o", f"{video_id}.mp4", url])
-
-# رفع فيديو إلى Google Drive
-def upload_to_drive(filename, access_token):
-    metadata = {
-        "name": filename,
-        "parents": [FOLDER_ID]
-    }
-    files = {
-        'data': ('metadata', json.dumps(metadata), 'application/json'),
-        'file': (filename, open(filename, 'rb'))
-    }
-    headers = {"Authorization": f"Bearer {access_token}"}
-    r = requests.post("https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart", 
-                      headers=headers, files=files)
-    return r.status_code == 200
-
-# ---------- التنفيذ ---------- #
-if __name__ == "__main__":
+def get_drive_service():
     access_token = get_access_token()
-    downloaded = 0
-    log = load_log()
-    found = search_youtube()
-    to_log = []
+    creds = Credentials(token=access_token)
+    return build('drive', 'v3', credentials=creds)
 
-    for video_id, title in found:
+def load_log():
+    if not os.path.exists(LOG_FILE):
+        return set()
+    with open(LOG_FILE, 'r', encoding='utf-8') as f:
+        return set(line.strip() for line in f)
+
+def save_log(video_id):
+    with open(LOG_FILE, 'a', encoding='utf-8') as f:
+        f.write(f"{video_id}\n")
+
+def search_chroma_videos(max_results=3):
+    query = 'تلاوة قرآنية خلفية سوداء'
+    url = 'https://www.googleapis.com/youtube/v3/search'
+    params = {
+        'part': 'snippet',
+        'q': query,
+        'maxResults': max_results * 3,
+        'type': 'video',
+        'key': os.environ.get('YOUTUBE_API_KEY')
+    }
+    response = requests.get(url, params=params)
+    return response.json().get('items', [])
+
+def download_video(video_id):
+    ydl_opts = {
+        'format': 'bestvideo+bestaudio/best',
+        'outtmpl': f'{video_id}.mp4',
+        'quiet': True
+    }
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        ydl.download([f'https://www.youtube.com/watch?v={video_id}'])
+    return f'{video_id}.mp4'
+
+def upload_to_drive(service, filepath):
+    file_metadata = {
+        'name': os.path.basename(filepath),
+        'parents': [FOLDER_ID]
+    }
+    media = MediaFileUpload(filepath, mimetype='video/mp4', resumable=True)
+    file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+    return file.get('id')
+
+def main():
+    log = load_log()
+    service = get_drive_service()
+
+    videos = search_chroma_videos(max_results=3)
+    downloaded = 0
+
+    for item in videos:
+        video_id = item['id']['videoId']
         if video_id in log:
             continue
-        print(f"Downloading: {title}")
-        download_video(video_id)
-        filename = f"{video_id}.mp4"
-        print(f"Uploading to Drive: {filename}")
-        success = upload_to_drive(filename, access_token)
-        if success:
-            to_log.append(video_id)
-            downloaded += 1
+
+        print(f"⬇️ Downloading {video_id}")
+        try:
+            filename = download_video(video_id)
+            print(f"⬆️ Uploading {filename} to Drive")
+            upload_to_drive(service, filename)
+            save_log(video_id)
             os.remove(filename)
-        else:
-            print(f"❌ Failed to upload {filename}")
-        if downloaded >= DOWNLOAD_COUNT:
+            downloaded += 1
+        except Exception as e:
+            print(f"❌ Error with {video_id}: {e}")
+
+        if downloaded >= 3:
             break
 
-    save_to_log(to_log)
-    print(f"✅ Finished downloading and uploading {downloaded} video(s).")
+if __name__ == "__main__":
+    main()
